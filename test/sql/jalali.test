@@ -1,0 +1,23 @@
+# name: test/sql/jalali.test
+# description: test jalali extension
+# group: [jalali]
+
+# Before we load the extension, this will fail
+statement error
+SELECT jalali('Sam');
+----
+Catalog Error: Scalar Function with name jalali does not exist!
+
+# Require statement will ensure this test is run with this extension loaded
+require jalali
+
+# Confirm the extension works
+query I
+SELECT jalali('Sam');
+----
+Jalali Sam 🐥
+
+query I
+SELECT jalali_openssl_version('Michael') ILIKE 'Jalali Michael, my linked OpenSSL version is OpenSSL%';
+----
+true
